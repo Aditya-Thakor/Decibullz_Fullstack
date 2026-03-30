@@ -8,6 +8,8 @@ import fs from 'fs';
 import { fileURLToPath } from 'url';
 import { createUser, deleteUser, getUser, updateUser } from './modules/user/controllers/user.js';
 import { addProduct, deleteProduct, getProducts, updateProduct } from './modules/product/controllers/product.js';
+import { log } from 'console';
+import { Users } from './modules/user/models/user.model.js';
 
 dotenv.config();
 
@@ -94,6 +96,33 @@ const vidUpload = multer({storage:vidStorage});
 app.use('/decibullz/products-review/videos', express.static(path.join(__dirname,'reviewVideos')));
 
 /* ----- video reviews storage done!!! */
+
+// user login
+app.post('/decibullz/user/login', pfpUpload.none(), async(req,res)=>{
+ console.log(req.body);
+
+ try {
+    const validUser = await Users.findOne({email:req.body.email, password:req.body.password})
+    log(validUser);
+    if(!validUser){
+        res.status(404).json({message:"User not found, please Signup first.."})
+    }
+
+        res.status(200).json({message:"User Logedin successfull..", validUser})
+    // if(validUser && validUser?.password==res.body?.password ){
+    //     res.status(200).json({message:"User Logedin successfull..", validUser})
+    // }else{
+    //     res.status(401).json({message:"Incorrect password"})
+    // }
+    
+
+    
+ } catch (error) {
+    log('error at login user');
+    throw (error)
+ }
+
+})
 
 /*::: USER CRUD ::: */
 
