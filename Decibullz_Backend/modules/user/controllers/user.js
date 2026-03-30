@@ -3,11 +3,14 @@ import { Users } from '../models/user.model.js';
 
 // create user;;;;
 export const createUser = async(req,res)=>{
-    const data=req.body;
-        console.log(data);
     
+    //     console.log(req.body);
+    const {username, email, password} = req.body;
+    const profileImage = req.file? req.file.filename : ''
+    const userData = {username, email,password, profileImage}
+
         try {
-            const usr = await Users(data);
+            const usr = await Users(userData);
             usr.save();
     
             res.status(200).json({
