@@ -10,6 +10,7 @@ import { createUser, deleteUser, getUser, updateUser } from './modules/user/cont
 import { addProduct, deleteProduct, getProducts, updateProduct } from './modules/product/controllers/product.js';
 import { log } from 'console';
 import { Users } from './modules/user/models/user.model.js';
+import { AdminLogin } from './modules/admin/controllers/admin.js';
 
 dotenv.config();
 
@@ -96,6 +97,9 @@ const vidUpload = multer({storage:vidStorage});
 app.use('/decibullz/products-review/videos', express.static(path.join(__dirname,'reviewVideos')));
 
 /* ----- video reviews storage done!!! */
+// admin login
+app.post('/dz.admin/login', AdminLogin);
+// admin login ended
 
 // user login
 app.post('/decibullz/user/login', pfpUpload.none(), async(req,res)=>{
