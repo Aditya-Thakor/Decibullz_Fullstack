@@ -26,8 +26,8 @@ app.use(express.json());
 app.use(cors());
 
 app.get('/',(req,res)=>{
-    res.send("Welcome to decibullz..");
-})
+    res.redirect('http://localhost:5173/');
+});
 
 /* ::::: MULTER ::::: */ 
 
